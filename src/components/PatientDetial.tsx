@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
 import { useMatch } from "react-router-dom";
 import patientServices from "../services/patients";
-import { Patient } from "../types";
+import { Diagnosis, Patient } from "../types";
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
 
-const PatientDetail = () => {
+
+interface Props {
+  diagnoses: Diagnosis[];
+}
+
+
+
+
+
+const PatientDetail = (props:Props) => {
   const match = useMatch("/patients/:id");
   const [patient, setPatient] = useState<Patient>();
   useEffect(() => {
@@ -23,21 +32,25 @@ const PatientDetail = () => {
 
       entries
 
-      <p>{patient?.entries.map((entrie)=>{
+      <div>{patient?.entries.map((entrie)=>{
         return(
-          <div>
+          <div key={entrie.id}>
             <p>{entrie.date}</p>
             <p>{entrie.description}</p>
             <ul>
               {entrie.diagnosisCodes?.map((code)=>{
                 return(
-                  <li>{code}</li>
+                  <li key={code}>{code} {props.diagnoses.find((diagnose)=>{
+                    return diagnose.code===code;
+                  })?.name}</li>
+
+                  //todo : 输出对应 名字
                 );
               })}
             </ul>
           </div>
         );
-      })}</p>
+      })}</div>
 
 
 
