@@ -19,6 +19,28 @@ const PatientDetail = () => {
       {patient?.gender==="female" && <FemaleIcon/>}
       <p>{patient?.dateOfBirth}</p>
       <p>{patient?.occupation}</p>
+
+
+      entries
+
+      <p>{patient?.entries.map((entrie)=>{
+        return(
+          <div>
+            <p>{entrie.date}</p>
+            <p>{entrie.description}</p>
+            <ul>
+              {entrie.diagnosisCodes?.map((code)=>{
+                return(
+                  <li>{code}</li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      })}</p>
+
+
+
     </>
   );
 };
